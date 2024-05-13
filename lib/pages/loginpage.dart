@@ -22,9 +22,11 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 50),
 
             // logo
-            const Icon(
-              Icons.lock,
-              size: 100,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:const  [
+                SquareTile(imagePath: 'lib/images/emiröztürk.png'),
+              ],
             ),
 
             const SizedBox(height: 50),
