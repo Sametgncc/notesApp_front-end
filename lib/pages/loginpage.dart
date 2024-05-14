@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
 
               // Tekrar hoş geldin!
               Text(
-                'Tekrar hoşgeldin',
+                'Welcome back!',
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 20,
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
               // Kullanıcı adı metin alanı
               MyTextField(
                 controller: TextEditingController(),
-                hintText: 'Username',
+                hintText: 'Kullanıcı Adı',
                 obscureText: false,
               ),
               const SizedBox(height: 10),
@@ -52,7 +52,7 @@ class LoginPage extends StatelessWidget {
               // Şifre metin alanı
               MyTextField(
                 controller: TextEditingController(),
-                hintText: 'Password',
+                hintText: 'Şifre',
                 obscureText: true,
               ),
               const SizedBox(height: 10),
