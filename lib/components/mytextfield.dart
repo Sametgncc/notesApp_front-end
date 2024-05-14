@@ -2,15 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyTextField extends StatelessWidget {
-  final controller;
+  final TextEditingController controller;
   final String hintText;
   final bool obscureText;
+
   const MyTextField({
-    super.key,
+    Key? key,
     required this.hintText,
     required this.obscureText,
     required this.controller,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +22,15 @@ class MyTextField extends StatelessWidget {
         obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide:BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: Colors.white),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade400),
           ),
           fillColor: Colors.grey.shade200,
           filled: true,
-          hintText:hintText,
-          hintStyle: TextStyle(color:Colors.grey[500]),
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey[500]),
         ),
       ),
     );
