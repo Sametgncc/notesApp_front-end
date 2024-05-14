@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 25),
 
               // Oturum aç düğmesi
-              MyButton(onTap: signUserIn),
+              MyButton(onTap: signUserIn, text: 'Giriş Yap'),
               const SizedBox(height: 50),
 
               // Veya devam et
