@@ -24,205 +24,88 @@ class HomePage extends StatelessWidget {
         ],
       ),
 
-      body: Column(
+      body: ListView(
+        padding: EdgeInsets.symmetric(vertical: 16.0),
         children: [
-          Expanded(
-            child: GridView.count(
-              crossAxisCount: 2, // İki sütun
-              mainAxisSpacing: 16.0, // Kareler arası dikey boşluk
-              crossAxisSpacing: 16.0, // Kareler arası yatay boşluk
-              childAspectRatio: 1.0, // Karelerin boyutları eşit
-              padding: EdgeInsets.all(16.0),
-              children: [
-                // Folder 1: Tüm Notlar
-                GestureDetector(
-                  onTap: () {
-                    // Tüm notları görüntülemek için ekranı aç
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AllNotesScreen()),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[500],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Tüm Notlar',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Metin boyutunu artır
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+          Column(
+            children: [
+              GridView.count(
+                crossAxisCount: 2, // İki sütun
+                mainAxisSpacing: 20.0, // Kareler arası dikey boşluk
+                crossAxisSpacing: 16.0, // Kareler arası yatay boşluk
+                childAspectRatio: 0.9, // Karelerin boyutları eşit
+                padding: EdgeInsets.all(16.0),
+                shrinkWrap: true,
+                children: [
+                  // Folder 1: Tüm Notlar
+                  _buildFolderItem(context, 'Tüm Notlar', 'Tüm Notlar Ekranı', AllNotesScreen()),
 
-                // Folder 2: Kişisel Notlarım
-                GestureDetector(
-                  onTap: () {
-                    // Kişisel notlar için ekranı aç
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PersonalNotesScreen()),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[500],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Kişisel Notlarım',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Metin boyutunu artır
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                  // Folder 2: Kişisel Notlarım
+                  _buildFolderItem(context, 'Kişisel Notlarım', 'Kişisel Notlar Ekranı', PersonalNotesScreen()),
 
-                // Folder 3: Yapılacaklar Listesi
-                GestureDetector(
-                  onTap: () {
-                    // Yapılacaklar listesi için ekranı aç
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ToDoListScreen()),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[500],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Yapılacaklar Listesi',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Metin boyutunu artır
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                  // Folder 3: Yapılacaklar Listesi
+                  _buildFolderItem(context, 'Görev Listesi', 'Yapılacaklar Listesi Ekranı', MissionScreen()),
 
-                // Folder 4: Günlük
-                GestureDetector(
-                  onTap: () {
-                    // Günlük için ekranı aç
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => JournalScreen()),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[500],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Rüya Günlüğü',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Metin boyutunu artır
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                  // Folder 4: Günlük
+                  _buildFolderItem(context, 'Rüya Günlüğü', 'Rüya Günlük Ekranı', JournalScreen()),
 
-                // Folder 5: Projeler
-                GestureDetector(
-                  onTap: () {
-                    // Projeler için ekranı aç
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProjectsScreen()),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[500],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Projeler',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Metin boyutunu artır
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                  // Folder 5: Projeler
+                  _buildFolderItem(context, 'Projeler', 'Projeler Ekranı', ProjectsScreen()),
 
-                // Folder 6: Okuma Listesi
-                GestureDetector(
-                  onTap: () {
-                    // Okuma listesi için ekranı aç
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ReadingListScreen()),
-                    );
+                  // Folder 6: Okuma Listesi
+                  _buildFolderItem(context, 'Okuma Listesi', 'Okuma Listesi Ekranı', ReadingListScreen()),
+                ],
+              ),
+              SizedBox(height: 16), // Boşluk ekleyelim
+              // Ekle Butonu
+              SizedBox(height: 7), // Buton ile alt arasında boşluk bırakalım
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 35.0), // Yatay dolguyu artır
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Ekleme işlevselliğini uygula
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[500],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Okuma Listesi',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18, // Metin boyutunu artır
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add),
+                      SizedBox(width: 22), // İkon ve metin arasındaki boşluğu biraz daha artır
+                      Text('Yeni Not Ekle', style: TextStyle(fontSize: 18)), // Metin boyutunu artır
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          // Ekle Butonu
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 35.0), // Yatay dolguyu artır
-            child: Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Ekleme işlevselliğini uygula
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add),
-                        SizedBox(width: 12), // İkon ve metin arasındaki boşluğu biraz daha artır
-                        Text('Yeni Not Ekle', style: TextStyle(fontSize: 18)), // Metin boyutunu artır
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 16), // Butonla alt arasındaki boşluğu artır
         ],
+      ),
+    );
+  }
+
+  Widget _buildFolderItem(BuildContext context, String title, String screenName, Widget screen) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => screen),
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[500],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -256,15 +139,15 @@ class PersonalNotesScreen extends StatelessWidget {
   }
 }
 
-class ToDoListScreen extends StatelessWidget {
+class MissionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Yapılacaklar Listesi'),
+        title: Text('Görev Listesi'),
       ),
       body: Center(
-        child: Text('Yapılacaklar Listesi Ekranı'),
+        child: Text('Görev Listesi Ekranı'),
       ),
     );
   }
