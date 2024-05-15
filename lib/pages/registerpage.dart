@@ -4,8 +4,10 @@ import 'package:notesapp/components/mytextfield.dart';
 import 'package:notesapp/components/squaretile.dart';
 
 class RegisterPage extends StatelessWidget {
+  final VoidCallback GirisYap;
+  final VoidCallback KayitOl;
 
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key, required this.GirisYap,required this.KayitOl}) : super(key: key);
 
   void registerUser() {
     // Kullanıcı kayıt işlemi burada yapılacak
@@ -22,7 +24,7 @@ class RegisterPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 50),
+                SizedBox(height: 50),
 
                 // Hesap Oluştur!
                 Text(
@@ -32,7 +34,7 @@ class RegisterPage extends StatelessWidget {
                     fontSize: 20,
                   ),
                 ),
-                const SizedBox(height: 25),
+                SizedBox(height: 25),
 
                 // Kullanıcı adı metin alanı
                 MyTextField(
@@ -40,7 +42,7 @@ class RegisterPage extends StatelessWidget {
                   hintText: 'Kullanıcı Adı',
                   obscureText: false,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
 
                 // E-posta metin alanı
                 MyTextField(
@@ -48,7 +50,7 @@ class RegisterPage extends StatelessWidget {
                   hintText: 'E-posta',
                   obscureText: false,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
 
                 // Şifre metin alanı
                 MyTextField(
@@ -56,10 +58,11 @@ class RegisterPage extends StatelessWidget {
                   hintText: 'Şifre',
                   obscureText: true,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
+
                 // Kayıt ol düğmesi
-                MyButton(onTap: registerUser, text: 'Kayıt Ol'),
-                const SizedBox(height: 50),
+                MyButton(onTap: KayitOl, text: 'Kayıt Ol'),
+                SizedBox(height: 50),
 
                 // Veya devam et
                 Padding(
@@ -88,25 +91,28 @@ class RegisterPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 50),
+                SizedBox(height: 50),
 
                 // Zaten üye misin? Giriş yap
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Zaten üye misin',
-                      style: TextStyle(color: Colors.grey[700]),
-                    ),
-                    const SizedBox(width: 4),
-                    const Text(
-                      'Giriş Yap',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: GirisYap,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Zaten üye misin',
+                        style: TextStyle(color: Colors.grey[700]),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 4),
+                      Text(
+                        'Giriş Yap',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

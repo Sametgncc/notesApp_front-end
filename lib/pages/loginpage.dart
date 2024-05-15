@@ -4,7 +4,11 @@ import 'package:notesapp/components/mytextfield.dart';
 import 'package:notesapp/components/squaretile.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final VoidCallback Uyeol;
+  final VoidCallback OturumAc;
+
+  const LoginPage({Key? key, required this.Uyeol,required this.OturumAc}) : super(key: key);
+
   void signUserIn() {
     // Kullanıcı giriş işlemi burada yapılacak
   }
@@ -18,7 +22,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(height: 50),
+              SizedBox(height: 50),
 
               // Logo
               Row(
@@ -28,7 +32,7 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 50),
+              SizedBox(height: 50),
 
               // Tekrar hoş geldin!
               Text(
@@ -38,7 +42,7 @@ class LoginPage extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25),
 
               // Kullanıcı adı metin alanı
               MyTextField(
@@ -46,7 +50,7 @@ class LoginPage extends StatelessWidget {
                 hintText: 'Kullanıcı Adı',
                 obscureText: false,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
 
               // Şifre metin alanı
               MyTextField(
@@ -54,7 +58,7 @@ class LoginPage extends StatelessWidget {
                 hintText: 'Şifre',
                 obscureText: true,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
 
               // Şifreyi unuttum
               Padding(
@@ -69,11 +73,11 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25),
 
               // Oturum aç düğmesi
-              MyButton(onTap: signUserIn, text: 'Giriş Yap'),
-              const SizedBox(height: 50),
+              MyButton(onTap: OturumAc, text: 'Oturum Aç'),
+              SizedBox(height: 50),
 
               // Veya devam et
               Padding(
@@ -102,7 +106,7 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 50),
+              SizedBox(height: 50),
 
               // Google ve Apple ile oturum açma
               Row(
@@ -113,25 +117,28 @@ class LoginPage extends StatelessWidget {
                   SquareTile(imagePath: 'lib/images/apple.png'),
                 ],
               ),
-              const SizedBox(height: 50),
+              SizedBox(height: 50),
 
               // Üye değil misin? Kayıt ol
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Üye değil misin',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(width: 4),
-                   const Text(
-                    'Üye ol',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: Uyeol,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Üye değil misin',
+                      style: TextStyle(color: Colors.grey[700]),
                     ),
-                  ),
-                ],
+                    SizedBox(width: 4),
+                    const Text(
+                      'Üye ol',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

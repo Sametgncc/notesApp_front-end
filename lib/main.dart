@@ -1,20 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/homepage.dart';
+import 'package:notesapp/pages/homepage.dart'; // HomePage sayfasını import ettik
 import 'package:notesapp/pages/loginpage.dart';
 import 'package:notesapp/pages/registerpage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  LoginPage(),
+      initialRoute: '/login', // Başlangıç sayfası olarak login_page'i belirledik
+      routes: {
+        '/login': (context) => LoginPage(
+          Uyeol: () {
+            // LoginPage'deki Uyeol fonksiyonu ile RegisterPage'e geçiş
+            Navigator.pushNamed(context, '/register');
+          },
+          OturumAc: () {
+            //LoginPage'deki Oturum Aç fonksiyonu ile HomePage'e geçiş
+            Navigator.pushNamed(context, '/home');
+          },
+        ),
+        '/register': (context) => RegisterPage(
+          GirisYap: () {
+            // RegisterPage'deki GirisYap fonksiyonu ile LoginPage'e geçiş
+            Navigator.pushNamed(context, '/login');
+          },
+          KayitOl: () {
+            //RegisterPage'deki Kayıt Ol fonksiyonu ile HomePage'e geçiş
+            Navigator.pushNamed(context, '/home');
+          },
+        ),
+        '/home': (context) => HomePage(),
+      },
     );
   }
 }
