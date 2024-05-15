@@ -5,7 +5,6 @@ import 'package:notesapp/components/squaretile.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-
   void signUserIn() {
     // Kullanıcı giriş işlemi burada yapılacak
   }
@@ -125,7 +124,7 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(color: Colors.grey[700]),
                   ),
                   const SizedBox(width: 4),
-                  const Text(
+                   const Text(
                     'Üye ol',
                     style: TextStyle(
                       color: Colors.blue,
