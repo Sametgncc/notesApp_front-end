@@ -105,11 +105,13 @@ class LoginPage extends StatelessWidget {
               ),
               const SizedBox(height: 50),
 
-              // Google ile oturum açma
+              // Google ve Apple ile oturum açma
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   SquareTile(imagePath: 'lib/images/google.png'),
+                  SizedBox(width: 10), // İki buton arasında boşluk bırakmak için
+                  SquareTile(imagePath: 'lib/images/apple.png'),
                 ],
               ),
               const SizedBox(height: 50),
