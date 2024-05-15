@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/pages/homepage.dart';
 import 'package:notesapp/pages/loginpage.dart';
 import 'package:notesapp/pages/registerpage.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  RegisterPage(),
+      home:  HomePage(),
     );
   }
 }
