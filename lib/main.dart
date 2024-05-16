@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/homepage.dart'; // HomePage sayfasını import ettik
+import 'package:notesapp/pages/homepage.dart';
 import 'package:notesapp/pages/loginpage.dart';
 import 'package:notesapp/pages/registerpage.dart';
 
@@ -12,25 +12,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login', // Başlangıç sayfası olarak login_page'i belirledik
+      initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(
-          Uyeol: () {
-            // LoginPage'deki Uyeol fonksiyonu ile RegisterPage'e geçiş
+          Uyeol: () { // LoginPage'deki Uyeol fonksiyonu ile RegisterPage'e geçiş
             Navigator.pushNamed(context, '/register');
           },
-          OturumAc: () {
-            //LoginPage'deki Oturum Aç fonksiyonu ile HomePage'e geçiş
+          OturumAc: () { //LoginPage'deki Oturum Aç fonksiyonu ile HomePage'e geçiş
             Navigator.pushNamed(context, '/home');
           },
         ),
         '/register': (context) => RegisterPage(
-          GirisYap: () {
-            // RegisterPage'deki GirisYap fonksiyonu ile LoginPage'e geçiş
+          GirisYap: () { // RegisterPage'deki GirisYap fonksiyonu ile LoginPage'e geçiş
             Navigator.pushNamed(context, '/login');
           },
-          KayitOl: () {
-            //RegisterPage'deki Kayıt Ol fonksiyonu ile HomePage'e geçiş
+          KayitOl: () {  //RegisterPage'deki Kayıt Ol fonksiyonu ile HomePage'e geçiş
             Navigator.pushNamed(context, '/home');
           },
         ),
