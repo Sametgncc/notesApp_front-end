@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/pages/homepage/notecontentpage.dart';
 
 
 class FolderNotesPage extends StatefulWidget {
@@ -7,10 +8,10 @@ class FolderNotesPage extends StatefulWidget {
   const FolderNotesPage({Key? key, required this.folderName}) : super(key: key);
 
   @override
-  _FolderNotesPageState createState() => _FolderNotesPageState();
+  FolderNotesPageState createState() => FolderNotesPageState();
 }
 
-class _FolderNotesPageState extends State<FolderNotesPage> {
+class FolderNotesPageState extends State<FolderNotesPage> {
   List<String> notes = [
     'Note 1',
     'Note 2',
@@ -67,7 +68,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
                           onTap: () {
                             // Düzenleme işlemi
                             Navigator.pop(context);
-                            _editNote(context, index);
+                            editNote(context, index);
                           },
                         ),
                         ListTile(
@@ -76,7 +77,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
                           onTap: () {
                             // Silme işlemi
                             Navigator.pop(context);
-                            _deleteNoteConfirmation(context, index);
+                            deleteNoteConfirmation(context, index);
                           },
                         ),
                         ListTile(
@@ -85,7 +86,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
                           onTap: () {
                             // Yeniden adlandırma işlemi
                             Navigator.pop(context);
-                            _renameNote(context, index);
+                            renameNote(context, index);
                           },
                         ),
                       ],
@@ -100,7 +101,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
     );
   }
 
-  void _editNote(BuildContext context, int index) {
+  void editNote(BuildContext context, int index) {
     // Düzenleme işlemi öncesi not içeriği sayfasına yönlendir
     Navigator.push(
       context,
@@ -123,7 +124,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
     });
   }
 
-  void _deleteNoteConfirmation(BuildContext context, int index) {
+  void deleteNoteConfirmation(BuildContext context, int index) {
     // Silme işlemi için onay isteme
     showDialog(
       context: context,
@@ -135,7 +136,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
             TextButton(
               child: Text("Evet"),
               onPressed: () {
-                _deleteNote(context, index);
+                deleteNote(context, index);
                 Navigator.of(context).pop();
               },
             ),
@@ -151,7 +152,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
     );
   }
 
-  void _deleteNote(BuildContext context, int index) {
+  void deleteNote(BuildContext context, int index) {
     // Silme işlemi
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -176,7 +177,7 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
     });
   }
 
-  void _renameNote(BuildContext context, int index) {
+  void renameNote(BuildContext context, int index) {
     // Yeniden adlandırma işlemi
     showDialog(
       context: context,
@@ -219,49 +220,5 @@ class _FolderNotesPageState extends State<FolderNotesPage> {
   }
 }
 
-class NoteContentPage extends StatelessWidget {
-  final String noteContent;
 
-  const NoteContentPage({Key? key, required this.noteContent}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController(text: noteContent);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey[300],
-        title: Text('Not İçeriği'),
-      ),
-      body: Container(
-        color: Colors.grey[300], // Notlar arka plan rengi
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Not:',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-              TextFormField(
-                autofocus: true,
-                controller: controller,
-                decoration: InputDecoration(
-                  labelText: 'Notunuzu buraya düzenleyin...',
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(controller.text);
-                },
-                child: Text('Kaydet'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
