@@ -3,7 +3,6 @@ import 'package:notesapp/pages/homepage/addnotehomepage.dart';
 import 'package:notesapp/pages/homepage/allnotespage.dart';
 import 'package:notesapp/pages/homepage/archivepage.dart';
 import 'package:notesapp/pages/homepage/choosefolderpage.dart';
-import 'package:notesapp/pages/homepage/reminderpage.dart';
 import 'package:notesapp/pages/homepage/settingspage.dart';
 import 'package:notesapp/pages/homepage/trashpage.dart';
 
@@ -69,17 +68,6 @@ class HomePage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.5,
           child: ListView(
             children: [
-              ListTile(
-                leading: Icon(Icons.notifications),
-                title: Text("Hatırlatıcılar"),
-                onTap: () {
-                  Navigator.pop(context); // Menüyü kapat
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RemindersPage()),
-                  );
-                },
-              ),
               ListTile(
                 leading: Icon(Icons.archive),
                 title: Text("Arşiv"),
