@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SelectFolderDialog extends StatelessWidget {
+class SelectFolderPage extends StatelessWidget {
   final List<String> folders = [
     'Kişisel Notlarım',
     'Görev Listesi',

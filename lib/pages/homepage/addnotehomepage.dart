@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/homepage/selectfolderdialog.dart';
+import 'package:notesapp/pages/homepage/selectfolderpage.dart';
 
 
 class AddNoteHomePage extends StatelessWidget {
@@ -34,7 +34,7 @@ class AddNoteHomePage extends StatelessWidget {
                 String? selectedFolder = await showDialog<String>(
                   context: context,
                   builder: (BuildContext context) {
-                    return SelectFolderDialog();
+                    return SelectFolderPage();
                   },
                 );
 
