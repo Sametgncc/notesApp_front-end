@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/pages/homepage/addnotehomepage.dart';
 import 'package:notesapp/pages/homepage/allnotespage.dart';
+import 'package:notesapp/pages/homepage/archivepage.dart';
 import 'package:notesapp/pages/homepage/choosefolderpage.dart';
+import 'package:notesapp/pages/homepage/reminderpage.dart';
+import 'package:notesapp/pages/homepage/settingspage.dart';
+import 'package:notesapp/pages/homepage/trashpage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,12 +30,14 @@ class HomePage extends StatelessWidget {
               icon: Icon(Icons.search),
               onPressed: () {
                 // Arama işlevselliğini uygula
+                showSearchDialog(context);
               },
             ),
             IconButton(
-              icon: Icon(Icons.more_vert),
+              icon: Icon(Icons.menu),
               onPressed: () {
-                // Daha fazla işlemi uygula
+                // Özel menüyü göster
+                showCustomMenu(context);
               },
             ),
           ],
@@ -52,6 +58,107 @@ class HomePage extends StatelessWidget {
           child: Icon(Icons.add),
         ),
       ),
+    );
+  }
+
+  void showCustomMenu(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: ListView(
+            children: [
+              ListTile(
+                leading: Icon(Icons.notifications),
+                title: Text("Hatırlatıcılar"),
+                onTap: () {
+                  Navigator.pop(context); // Menüyü kapat
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RemindersPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.archive),
+                title: Text("Arşiv"),
+                onTap: () {
+                  Navigator.pop(context); // Menüyü kapat
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ArchivePage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.delete),
+                title: Text("Çöp Kutusu"),
+                onTap: () {
+                  Navigator.pop(context); // Menüyü kapat
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TrashPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text("Ayarlar"),
+                onTap: () {
+                  Navigator.pop(context); // Menüyü kapat
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void showSearchDialog(BuildContext context) {
+    TextEditingController searchController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Not Ara"),
+          content: TextField(
+            controller: searchController,
+            decoration: InputDecoration(
+              hintText: "Aranacak not adını girin",
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Diyalog kutusunu kapat
+              },
+              child: Text("İptal"),
+            ),
+            TextButton(
+              onPressed: () {
+                String searchText = searchController.text.trim();
+                if (searchText.isNotEmpty) {
+                  // Aranan notun sayfasına yönlendir
+                  // Örneğin:
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => NotSayfasi(searchText)),
+                  // );
+                }
+                Navigator.pop(context); // Diyalog kutusunu kapat
+              },
+              child: Text("Ara"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
