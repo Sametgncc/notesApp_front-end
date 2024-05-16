@@ -8,13 +8,11 @@ class RegisterPage extends StatelessWidget {
   final VoidCallback KayitOl;
 
   const RegisterPage({Key? key, required this.GirisYap,required this.KayitOl}) : super(key: key);
-
-  void registerUser() {
-    // Kullanıcı kayıt işlemi burada yapılacak
-  }
-
   @override
   Widget build(BuildContext context) {
+    final usernameController=TextEditingController();
+    final passwordController=TextEditingController();
+    final mailController=TextEditingController();
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -38,7 +36,7 @@ class RegisterPage extends StatelessWidget {
 
                 // Kullanıcı adı metin alanı
                 MyTextField(
-                  controller: TextEditingController(),
+                  controller: usernameController,
                   hintText: 'Kullanıcı Adı',
                   obscureText: false,
                 ),
@@ -46,7 +44,7 @@ class RegisterPage extends StatelessWidget {
 
                 // E-posta metin alanı
                 MyTextField(
-                  controller: TextEditingController(),
+                  controller: mailController,
                   hintText: 'E-posta',
                   obscureText: false,
                 ),
@@ -54,14 +52,38 @@ class RegisterPage extends StatelessWidget {
 
                 // Şifre metin alanı
                 MyTextField(
-                  controller: TextEditingController(),
+                  controller: passwordController,
                   hintText: 'Şifre',
                   obscureText: true,
                 ),
                 SizedBox(height: 10),
 
                 // Kayıt ol düğmesi
-                MyButton(onTap: KayitOl, text: 'Kayıt Ol'),
+                MyButton(
+                  onTap: () {
+                    // Kullanıcı adı, e-posta ve şifre kontrolü yapılıyor
+                    if (usernameController.text.isNotEmpty && mailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                      // Kayıt işlemi gerçekleştirilir
+                      KayitOl();
+                    } else {
+                      // Kullanıcıya bir uyarı gösterilebilir
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text("Hata"),
+                          content: Text("Kullanıcı adı, e-posta ve şifre boş olamaz."),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text("Tamam"),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                  text: 'Kayıt Ol',
+                ),
                 SizedBox(height: 50),
 
                 // Veya devam et

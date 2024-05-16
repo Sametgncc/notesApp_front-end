@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/pages/registerpage/emptyvalidator.dart';
 import 'package:notesapp/components/mybutton.dart';
 import 'package:notesapp/components/mytextfield.dart';
 import 'package:notesapp/components/squaretile.dart';
@@ -7,14 +8,13 @@ class LoginPage extends StatelessWidget {
   final VoidCallback Uyeol;
   final VoidCallback OturumAc;
 
-  const LoginPage({Key? key, required this.Uyeol,required this.OturumAc}) : super(key: key);
-
-  void signUserIn() {
-    // Kullanıcı giriş işlemi burada yapılacak
-  }
+  const LoginPage({Key? key, required this.Uyeol, required this.OturumAc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -46,7 +46,7 @@ class LoginPage extends StatelessWidget {
 
               // Kullanıcı adı metin alanı
               MyTextField(
-                controller: TextEditingController(),
+                controller: usernameController,
                 hintText: 'Kullanıcı Adı',
                 obscureText: false,
               ),
@@ -54,7 +54,7 @@ class LoginPage extends StatelessWidget {
 
               // Şifre metin alanı
               MyTextField(
-                controller: TextEditingController(),
+                controller: passwordController,
                 hintText: 'Şifre',
                 obscureText: true,
               ),
@@ -76,7 +76,31 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 25),
 
               // Oturum aç düğmesi
-              MyButton(onTap: OturumAc, text: 'Oturum Aç'),
+              MyButton(
+                onTap: () {
+                  // Kullanıcı adı ve şifre kontrolü yapılıyor
+                  if (EmptyValidator.isNotEmpty(usernameController.text) && EmptyValidator.isNotEmpty(passwordController.text)) {
+                    OturumAc(); // Oturum açma fonksiyonu çağrılıyor
+                  } else {
+                    // Kullanıcıya bir uyarı gösterilebilir
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Hata"),
+                        content: Text("Kullanıcı adı ve şifre boş olamaz."),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("Tamam"),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+                text: 'Oturum Aç',
+              ),
+
               SizedBox(height: 50),
 
               // Veya devam et
