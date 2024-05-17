@@ -1,6 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notesapp/pages/homepage/notecontentpage.dart';
-
 
 class FolderNotesPage extends StatefulWidget {
   final String folderName;
@@ -18,6 +18,7 @@ class FolderNotesPageState extends State<FolderNotesPage> {
     'Note 3',
   ];
   List<String> deletedNotes = [];
+  List<String> archivedNotes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,8 @@ class FolderNotesPageState extends State<FolderNotesPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NoteContentPage(noteContent: notes[index]),
+                  builder: (context) =>
+                      NoteContentPage(noteContent: notes[index]),
                 ),
               );
             },
@@ -78,6 +80,15 @@ class FolderNotesPageState extends State<FolderNotesPage> {
                             // Silme işlemi
                             Navigator.pop(context);
                             deleteNoteConfirmation(context, index);
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.archive),
+                          title: Text('Arşivle'),
+                          onTap: () {
+                            // Arşivleme işlemi
+                            Navigator.pop(context);
+                            archiveNoteConfirmation(context, index);
                           },
                         ),
                         ListTile(
@@ -177,12 +188,66 @@ class FolderNotesPageState extends State<FolderNotesPage> {
     });
   }
 
+  void archiveNoteConfirmation(BuildContext context, int index) {
+    // Arşivleme işlemi için onay isteme
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Notu Arşivle"),
+          content: Text("Bu notu arşivlemek istiyor musun?"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Evet"),
+              onPressed: () {
+                archiveNote(context, index);
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text("Hayır"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void archiveNote(BuildContext context, int index) {
+    // Arşivleme işlemi
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${notes[index]} Arşivlendi'),
+        duration: Duration(seconds: 2),
+        action: SnackBarAction(
+          label: 'Geri Al',
+          onPressed: () {
+            // Arşivlenen notu geri ekle
+            setState(() {
+              notes.insert(index, archivedNotes.last);
+              archivedNotes.removeLast();
+            });
+          },
+        ),
+      ),
+    );
+    // Notu listeden kaldır ve arşivlere ekle
+    setState(() {
+      archivedNotes.add(notes[index]);
+      notes.removeAt(index);
+    });
+  }
+
   void renameNote(BuildContext context, int index) {
     // Yeniden adlandırma işlemi
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController controller = TextEditingController(text: notes[index]);
+        TextEditingController controller = TextEditingController(
+            text: notes[index]);
         return AlertDialog(
           title: Text("Yeniden Adlandır"),
           content: TextFormField(
@@ -219,6 +284,3 @@ class FolderNotesPageState extends State<FolderNotesPage> {
     );
   }
 }
-
-
-
