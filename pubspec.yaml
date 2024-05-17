@@ -9,8 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^0.8.4+5
-  cupertino_icons: ^1.0.6
+  image_picker: ^0.8.4+4
+  signature: ^5.5.0
 
 dev_dependencies:
   flutter_test:
