@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/pages/homepage/selectfolderpage.dart';
 
-
 class AddNoteHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,14 @@ class AddNoteHomePage extends StatelessWidget {
               onPressed: () async {
                 // Notu kaydetme işlevselliği
                 String note = noteController.text;
+
+                // Notun ismini al
+                String? noteName = await getNoteName(context);
+                if (noteName == null || noteName.isEmpty) {
+                  // Eğer not adı girilmediyse, kaydetme işlemini iptal et
+                  return;
+                }
+
                 // Klasör seçimi için dialog göster
                 String? selectedFolder = await showDialog<String>(
                   context: context,
@@ -40,7 +47,7 @@ class AddNoteHomePage extends StatelessWidget {
 
                 if (selectedFolder != null) {
                   // Notu seçilen klasöre kaydet
-                  print('Not kaydedildi: $note, Klasör: $selectedFolder');
+                  print('Not kaydedildi: $noteName, Klasör: $selectedFolder');
                 }
 
                 Navigator.pop(context); // Not ekleme ekranından çık
@@ -50,6 +57,42 @@ class AddNoteHomePage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  // Notun ismini almak için bir metot
+  Future<String?> getNoteName(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Notun İsmini Girin'),
+          content: TextField(
+            controller: nameController,
+            decoration: InputDecoration(
+              hintText: 'Notun adını girin',
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('İptal'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                String? noteName = nameController.text.trim();
+                if (noteName.isNotEmpty) {
+                  Navigator.pop(context, noteName);
+                }
+              },
+              child: Text('Tamam'),
+            ),
+          ],
+        );
+      },
     );
   }
 }
