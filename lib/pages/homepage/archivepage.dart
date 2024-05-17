@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class ArchivePage extends StatefulWidget {
   @override
-  _ArchivePageState createState() => _ArchivePageState();
+  ArchivePageState createState() => ArchivePageState();
 }
 
-class _ArchivePageState extends State<ArchivePage> {
+class ArchivePageState extends State<ArchivePage> {
   List<String> archivedNotes = [
     "Arşivlenmiş Not 1",
     "Arşivlenmiş Not 2",

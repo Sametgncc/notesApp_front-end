@@ -3,12 +3,12 @@ import 'package:notesapp/pages/homepage/changepassword.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  SettingsPageState createState() => SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
-  bool _isDarkModeEnabled = false;
-  double _fontSize = 16.0; // Örnek bir yazı tipi boyutu
+class SettingsPageState extends State<SettingsPage> {
+  bool isDarkModeEnabled = false;
+  double fontSize = 16.0; // Örnek bir yazı tipi boyutu
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +21,15 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           ListTile(
             title: Text('Tema Seçimi'),
-            subtitle: Text(_isDarkModeEnabled
+            subtitle: Text(isDarkModeEnabled
                 ? 'Uygulamanın temasını karanlık moda geçirin'
                 : 'Uygulamanın temasını aydınlık moda geçirin'),
             trailing: IconButton(
-              icon: Icon(_isDarkModeEnabled ? Icons.dark_mode : Icons.light_mode),
+              icon: Icon(isDarkModeEnabled ? Icons.dark_mode : Icons.light_mode),
               onPressed: () {
                 setState(() {
-                  _isDarkModeEnabled = !_isDarkModeEnabled;
-                  _changeTheme(_isDarkModeEnabled);
+                  isDarkModeEnabled = !isDarkModeEnabled;
+                  changeTheme(isDarkModeEnabled);
                 });
               },
             ),
@@ -51,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text('Yazı Tipi Boyutu'),
             subtitle: Text('Yazı tipi boyutunu ayarlamak için tıklayın'),
             onTap: () {
-              _showFontSizeDialog(); // Yazı tipi boyutu ayarları için bir dialog göster
+              showFontSizeDialog(); // Yazı tipi boyutu ayarları için bir dialog göster
             },
           ),
         ],
@@ -59,7 +59,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  void _changeTheme(bool isDarkModeEnabled) {
+  void changeTheme(bool isDarkModeEnabled) {
     setState(() {
       // Uygulama temasını güncelle
       ThemeData themeData = isDarkModeEnabled ? ThemeData.dark() : ThemeData.light();
@@ -72,7 +72,7 @@ class _SettingsPageState extends State<SettingsPage> {
     });
   }
 
-  void _showFontSizeDialog() {
+  void showFontSizeDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -84,17 +84,17 @@ class _SettingsPageState extends State<SettingsPage> {
               Text('Yazı tipi boyutunu seçin:'),
               SizedBox(height: 16.0),
               Slider(
-                value: _fontSize,
+                value: fontSize,
                 min: 10,
                 max: 30,
                 divisions: 20,
                 onChanged: (newValue) {
                   setState(() {
-                    _fontSize = newValue;
+                    fontSize = newValue;
                   });
                 },
               ),
-              Text('${_fontSize.toStringAsFixed(1)} pt'), // Yazı tipi boyutunu göster
+              Text('${fontSize.toStringAsFixed(1)} pt'), // Yazı tipi boyutunu göster
             ],
           ),
           actions: <Widget>[

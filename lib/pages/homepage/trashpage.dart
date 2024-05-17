@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class TrashPage extends StatefulWidget {
   @override
-  _TrashPageState createState() => _TrashPageState();
+  TrashPageState createState() => TrashPageState();
 }
 
-class _TrashPageState extends State<TrashPage> {
+class TrashPageState extends State<TrashPage> {
   List<String> deletedNotes = [
     "Silinmiş Not 1",
     "Silinmiş Not 2",

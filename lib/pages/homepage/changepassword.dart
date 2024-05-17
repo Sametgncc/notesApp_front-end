@@ -54,7 +54,7 @@ class ChangePasswordPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Yeni şifreleri kontrol ederek değiştirme işlemini gerçekleştir
-                _changePassword(context);
+                changePassword(context);
               },
               child: Text('Şifreyi Değiştir'),
             ),
@@ -64,7 +64,7 @@ class ChangePasswordPage extends StatelessWidget {
     );
   }
 
-  void _changePassword(BuildContext context) {
+  void changePassword(BuildContext context) {
     // Yeni şifreleri kontrol ederek değiştirme işlemini gerçekleştir
     // Burada gerekli işlemleri yapabilirsiniz
     // Örneğin:
