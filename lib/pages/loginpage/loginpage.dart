@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/registerpage/emptyvalidator.dart';
-import 'package:notesapp/components/mybutton.dart';
-import 'package:notesapp/components/mytextfield.dart';
-import 'package:notesapp/components/squaretile.dart';
+import 'package:notlar/components/mybutton.dart';
+import 'package:notlar/components/mytextfield.dart';
+import 'package:notlar/components/squaretile.dart';
+import 'package:notlar/pages/loginpage/emptyvalidator.dart';
 
 class LoginPage extends StatelessWidget {
   final VoidCallback Uyeol;

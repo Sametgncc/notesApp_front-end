@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/homepage/foldernotespage.dart';
+import 'package:notlar/pages/homepage/foldernotespage.dart';
 
 
 class ChooseFolderPage extends StatelessWidget {

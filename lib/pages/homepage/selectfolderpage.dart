@@ -7,6 +7,7 @@ class SelectFolderPage extends StatelessWidget {
     'Rüya Günlüğü',
     'Projeler',
     'Okuma Listesi',
+    'Çizimler'
   ];
 
   @override

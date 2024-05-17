@@ -11,8 +11,6 @@ class DrawingPage extends StatefulWidget {
 }
 
 class DrawingPageState extends State<DrawingPage> {
-  bool isEraserEnabled = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +18,10 @@ class DrawingPageState extends State<DrawingPage> {
         title: Text('Çizim Sayfası'),
         actions: [
           IconButton(
-            icon: Icon(Icons.save),
+            icon: Icon(Icons.check),
             onPressed: () {
-              Navigator.pop(context);
+              // Çizimi tamamladıktan sonra, çizim verilerini ana sayfaya gönder
+              Navigator.pop(context, widget.controller.toPngBytes());
             },
           ),
         ],
@@ -30,32 +29,21 @@ class DrawingPageState extends State<DrawingPage> {
       body: Column(
         children: [
           Expanded(
-            child: GestureDetector(
-              onPanUpdate: (details) {
-                if (!isEraserEnabled && isPointInBounds(details.localPosition)) {
-                  widget.controller.addPoint(details.localPosition as Point);
-                } else if (isEraserEnabled) {
-                  widget.controller.clear();
-                }
-              },
-              child: Signature(
-                controller: widget.controller,
-                backgroundColor: Colors.white,
-              ),
+            child: Signature(
+              controller: widget.controller,
+              backgroundColor: Colors.white,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    setState(() {
-                      isEraserEnabled = !isEraserEnabled;
-                    });
+                    widget.controller.clear();
                   },
-                  child: Text(isEraserEnabled ? 'Kalem' : 'Silgi'),
+                  child: Text('Temizle'),
                 ),
               ],
             ),
@@ -63,10 +51,5 @@ class DrawingPageState extends State<DrawingPage> {
         ],
       ),
     );
-  }
-
-  // Çizim bölgesi içindeki bir noktayı kontrol etmek için yardımcı işlev
-  bool isPointInBounds(Offset point) {
-    return point.dx >= 0 && point.dy >= 0;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/pages/homepage/homepage.dart';
-import 'package:notesapp/pages/loginpage/loginpage.dart';
-import 'package:notesapp/pages/registerpage/registerpage.dart';
+import 'package:notlar/pages/homepage/homepage.dart';
+import 'package:notlar/pages/loginpage/loginpage.dart';
+import 'package:notlar/pages/registerpage/registerpage.dart';
 
 void main() {
   runApp(MyApp());
