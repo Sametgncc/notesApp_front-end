@@ -1,3 +1,4 @@
+// loginpage.dart
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,28 +19,44 @@ class LoginPage extends StatelessWidget {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
 
-    Future<void> _login() async {
-      final response = await http.post(
-        Uri.parse('http://localhost:8080/api/users/login'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'username': usernameController.text,
-          'password': passwordController.text,
-        }),
-      );
+    Future<void> _login(String username, String password, BuildContext context) async {
+      try {
+        final response = await http.post(
+          Uri.parse('http://localhost:8080/api/users/login'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'username': username,
+            'password': password,
+          }),
+        );
 
-      if (response.statusCode == 200) {
-        // Successful login
-        OturumAc();
-      } else {
-        // Login failed
+        if (response.statusCode == 200) {
+          // Successful login
+          OturumAc();
+        } else {
+          // Login failed
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Hata"),
+              content: Text("Giriş başarısız. Kullanıcı adı veya şifre yanlış."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Tamam"),
+                ),
+              ],
+            ),
+          );
+        }
+      } catch (e) {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
             title: Text("Hata"),
-            content: Text("Giriş başarısız. Kullanıcı adı veya şifre yanlış."),
+            content: Text("Bir hata oluştu: $e"),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
@@ -116,7 +133,8 @@ class LoginPage extends StatelessWidget {
                 onTap: () {
                   // Kullanıcı adı ve şifre kontrolü yapılıyor
                   if (EmptyValidator.isNotEmpty(usernameController.text) && EmptyValidator.isNotEmpty(passwordController.text)) {
-                    _login(); // Oturum açma fonksiyonu çağrılıyor
+                    // Oturum açma fonksiyonu çağrılıyor
+                    _login(usernameController.text, passwordController.text, context);
                   } else {
                     // Kullanıcıya bir uyarı gösterilebilir
                     showDialog(
