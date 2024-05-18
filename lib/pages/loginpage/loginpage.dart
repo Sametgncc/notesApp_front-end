@@ -28,7 +28,11 @@ class LoginPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  SquareTile(imagePath: 'lib/images/emiröztürk.png'),
+                  Icon(
+                      Icons.person,
+                    size:100,
+                  ),
+
                 ],
               ),
 
