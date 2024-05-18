@@ -6,11 +6,17 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.3.4 <4.0.0'
 
+  dependencies:
+    flutter:
+      sdk: flutter
+    http: ^0.13.3
+
 dependencies:
   flutter:
     sdk: flutter
   image_picker: ^0.8.4+4
   flutter_colorpicker: ^0.5.0
+
 
 
 dev_dependencies:
