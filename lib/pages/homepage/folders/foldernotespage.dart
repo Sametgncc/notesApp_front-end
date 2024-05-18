@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notlar/pages/homepage/notecontentpage.dart';
+import 'package:notlar/pages/homepage/folders/notecontentpage.dart';
 
 class FolderNotesPage extends StatefulWidget {
   final String folderName;

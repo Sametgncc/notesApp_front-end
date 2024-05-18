@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notlar/pages/homepage/changepassword.dart';
+import 'package:notlar/pages/homepage/treelines/changepassword.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

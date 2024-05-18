@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:notlar/pages/homepage/addnotehomepage.dart';
+import 'package:notlar/pages/homepage/addnote/addnotehomepage.dart';
 import 'package:notlar/pages/homepage/allnotespage.dart';
-import 'package:notlar/pages/homepage/archivepage.dart';
-import 'package:notlar/pages/homepage/choosefolderpage.dart';
-import 'package:notlar/pages/homepage/settingspage.dart';
-import 'package:notlar/pages/homepage/trashpage.dart';
+import 'package:notlar/pages/homepage/treelines/archivepage.dart';
+import 'package:notlar/pages/homepage/folders/choosefolderpage.dart';
+import 'package:notlar/pages/homepage/treelines/settingspage.dart';
+import 'package:notlar/pages/homepage/treelines/trashpage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

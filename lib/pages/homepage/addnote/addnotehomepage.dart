@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:notlar/pages/homepage/drawingpage.dart';
-import 'package:notlar/pages/homepage/selectfolderpage.dart';
+import 'package:notlar/pages/homepage/addnote/drawingpage.dart';
+import 'package:notlar/pages/homepage/addnote/selectfolderpage.dart';
 import 'package:signature/signature.dart';
 
 class AddNoteHomePage extends StatefulWidget {
