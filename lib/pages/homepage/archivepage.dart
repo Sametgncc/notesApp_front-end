@@ -6,7 +6,7 @@ class ArchivePage extends StatefulWidget {
 }
 
 class ArchivePageState extends State<ArchivePage> {
-  List<String> archivedNotes = [
+  List<String> archivednotes = [
     "Arşivlenmiş Not 1",
     "Arşivlenmiş Not 2",
     "Arşivlenmiş Not 3",
@@ -19,14 +19,14 @@ class ArchivePageState extends State<ArchivePage> {
         title: Text('Arşiv'),
       ),
       body: ListView.builder(
-        itemCount: archivedNotes.length,
+        itemCount: archivednotes.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onLongPress: () {
               showDeleteConfirmationDialog(context, index);
             },
             child: ListTile(
-              title: Text(archivedNotes[index]),
+              title: Text(archivednotes[index]),
             ),
           );
         },
@@ -52,7 +52,7 @@ class ArchivePageState extends State<ArchivePage> {
               onPressed: () {
                 setState(() {
                   // Arşivden notu kaldırma işlemi
-                  String removedNote = archivedNotes.removeAt(index);
+                  String removedNote = archivednotes.removeAt(index);
                   // Kaldırılan notu burada işleyebilirsiniz.
                   print("Removed Note: $removedNote");
                 });

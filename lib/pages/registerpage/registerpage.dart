@@ -4,15 +4,15 @@ import 'package:notlar/components/mytextfield.dart';
 
 
 class RegisterPage extends StatelessWidget {
-  final VoidCallback GirisYap;
-  final VoidCallback KayitOl;
+  final VoidCallback Girisyap;
+  final VoidCallback Kayitol;
 
-  const RegisterPage({Key? key, required this.GirisYap,required this.KayitOl}) : super(key: key);
+  const RegisterPage({Key? key, required this.Girisyap,required this.Kayitol}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final usernameController=TextEditingController();
-    final passwordController=TextEditingController();
-    final mailController=TextEditingController();
+    final usernamecontroller=TextEditingController();
+    final passwordcontroller=TextEditingController();
+    final mailcontroller=TextEditingController();
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -36,7 +36,7 @@ class RegisterPage extends StatelessWidget {
 
                 // Kullanıcı adı metin alanı
                 MyTextField(
-                  controller: usernameController,
+                  controller: usernamecontroller,
                   hintText: 'Kullanıcı Adı',
                   obscureText: false,
                 ),
@@ -44,7 +44,7 @@ class RegisterPage extends StatelessWidget {
 
                 // E-posta metin alanı
                 MyTextField(
-                  controller: mailController,
+                  controller: mailcontroller,
                   hintText: 'E-posta',
                   obscureText: false,
                 ),
@@ -52,7 +52,7 @@ class RegisterPage extends StatelessWidget {
 
                 // Şifre metin alanı
                 MyTextField(
-                  controller: passwordController,
+                  controller: passwordcontroller,
                   hintText: 'Şifre',
                   obscureText: true,
                 ),
@@ -61,12 +61,12 @@ class RegisterPage extends StatelessWidget {
                 // Kayıt ol düğmesi
                 MyButton(
                   onTap: () {
-                    // Kullanıcı adı, e-posta ve şifre kontrolü yapılıyor
-                    if (usernameController.text.isNotEmpty && mailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                    // Boş mu kontrolü
+                    if (usernamecontroller.text.isNotEmpty && mailcontroller.text.isNotEmpty && passwordcontroller.text.isNotEmpty) {
                       // Kayıt işlemi gerçekleştirilir
-                      KayitOl();
+                      Kayitol();
                     } else {
-                      // Kullanıcıya bir uyarı gösterilebilir
+                      // Uyarı mesajı
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
@@ -117,7 +117,7 @@ class RegisterPage extends StatelessWidget {
 
                 // Zaten üye misin? Giriş yap
                 GestureDetector(
-                  onTap: GirisYap,
+                  onTap: Girisyap,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -15,18 +15,18 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginPage(
-          Uyeol: () { // LoginPage'deki Uyeol fonksiyonu ile RegisterPage'e geçiş
+          Uyeol: () { // Login'deki üyeol ile register'a geçiş
             Navigator.pushNamed(context, '/register');
           },
-          OturumAc: () { //LoginPage'deki Oturum Aç fonksiyonu ile HomePage'e geçiş
+          Oturumac: () { //Login'deki Oturumaç ile home'a geçiş
             Navigator.pushNamed(context, '/home');
           },
         ),
         '/register': (context) => RegisterPage(
-          GirisYap: () { // RegisterPage'deki GirisYap fonksiyonu ile LoginPage'e geçiş
+          Girisyap: () { // Register'daki Girisyap ile Login'e geçiş
             Navigator.pushNamed(context, '/login');
           },
-          KayitOl: () {  //RegisterPage'deki Kayıt Ol fonksiyonu ile HomePage'e geçiş
+          Kayitol: () {  //Register'daki Kayıtol ile home'a geçiş
             Navigator.pushNamed(context, '/home');
           },
         ),

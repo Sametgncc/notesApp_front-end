@@ -6,7 +6,7 @@ class TrashPage extends StatefulWidget {
 }
 
 class TrashPageState extends State<TrashPage> {
-  List<String> deletedNotes = [
+  List<String> deletednotes = [
     "Silinmiş Not 1",
     "Silinmiş Not 2",
     "Silinmiş Not 3",
@@ -19,22 +19,22 @@ class TrashPageState extends State<TrashPage> {
         title: Text('Çöp Kutusu'),
       ),
       body: ListView.builder(
-        itemCount: deletedNotes.length,
+        itemCount: deletednotes.length,
         itemBuilder: (context, index) {
           return TrashItem(
-            note: deletedNotes[index],
-            onRestore: () {
+            note: deletednotes[index],
+            onrestore: () {
               setState(() {
                 // Geri Yükleme İşlemi
-                String restoredNote = deletedNotes.removeAt(index);
+                String restoredNote = deletednotes.removeAt(index);
                 // Geri yüklenen notu burada işleyebilirsiniz.
                 print("Restored Note: $restoredNote");
               });
             },
-            onDelete: () {
+            ondelete: () {
               setState(() {
                 // Silme İşlemi
-                deletedNotes.removeAt(index);
+                deletednotes.removeAt(index);
               });
             },
           );
@@ -68,7 +68,7 @@ class TrashPageState extends State<TrashPage> {
               onPressed: () {
                 setState(() {
                   // Tüm notları silme işlemi
-                  deletedNotes.clear();
+                  deletednotes.clear();
                 });
                 Navigator.of(context).pop();
               },
@@ -83,10 +83,10 @@ class TrashPageState extends State<TrashPage> {
 
 class TrashItem extends StatelessWidget {
   final String note;
-  final VoidCallback onRestore;
-  final VoidCallback onDelete;
+  final VoidCallback onrestore;
+  final VoidCallback ondelete;
 
-  TrashItem({required this.note, required this.onRestore, required this.onDelete});
+  TrashItem({required this.note, required this.onrestore, required this.ondelete});
 
   @override
   Widget build(BuildContext context) {
@@ -111,14 +111,14 @@ class TrashItem extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                onDelete();
+                ondelete();
               },
               child: Text('Sil'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                onRestore();
+                onrestore();
               },
               child: Text('Geri Yükle'),
             ),

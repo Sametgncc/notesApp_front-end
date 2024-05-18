@@ -11,13 +11,13 @@ class AddNoteHomePage extends StatefulWidget {
 }
 
 class AddNoteHomePageState extends State<AddNoteHomePage> {
-  final TextEditingController noteController = TextEditingController();
-  final SignatureController signatureController = SignatureController(
+  final TextEditingController notecontroller = TextEditingController();
+  final SignatureController signaturecontroller = SignatureController(
     penStrokeWidth: 5,
     penColor: Colors.black,
     exportBackgroundColor: Colors.white,
   );
-  final ImagePicker _picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
   List<XFile> images = [];
 
   @override
@@ -32,7 +32,7 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
             icon: Icon(Icons.save),
             onPressed: () async {
               // Notu kaydetme işlevselliği
-              String note = noteController.text;
+              String note = notecontroller.text;
 
               // Notun ismini al
               String? noteName = await getNoteName(context);
@@ -68,7 +68,7 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
                 child: Column(
                   children: [
                     TextField(
-                      controller: noteController, // Controller atanması
+                      controller: notecontroller, // Controller atanması
                       decoration: InputDecoration(
                         hintText: 'Notunuzu buraya yazın',
                         border: InputBorder.none,
@@ -118,7 +118,7 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DrawingPage(controller: signatureController),
+                  builder: (context) => DrawingPage(controller: signaturecontroller),
                 ),
               );
             },
@@ -135,7 +135,7 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
   }
 
   Future<void> pickImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       setState(() {
         images.add(image);

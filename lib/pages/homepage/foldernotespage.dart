@@ -17,8 +17,8 @@ class FolderNotesPageState extends State<FolderNotesPage> {
     'Note 2',
     'Note 3',
   ];
-  List<String> deletedNotes = [];
-  List<String> archivedNotes = [];
+  List<String> deletednotes = [];
+  List<String> archivednotes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -174,8 +174,8 @@ class FolderNotesPageState extends State<FolderNotesPage> {
           onPressed: () {
             // Silinen notu geri ekle
             setState(() {
-              notes.insert(index, deletedNotes.last);
-              deletedNotes.removeLast();
+              notes.insert(index, deletednotes.last);
+              deletednotes.removeLast();
             });
           },
         ),
@@ -183,7 +183,7 @@ class FolderNotesPageState extends State<FolderNotesPage> {
     );
     // Notu listeden kaldır
     setState(() {
-      deletedNotes.add(notes[index]);
+      deletednotes.add(notes[index]);
       notes.removeAt(index);
     });
   }
@@ -227,8 +227,8 @@ class FolderNotesPageState extends State<FolderNotesPage> {
           onPressed: () {
             // Arşivlenen notu geri ekle
             setState(() {
-              notes.insert(index, archivedNotes.last);
-              archivedNotes.removeLast();
+              notes.insert(index, archivednotes.last);
+              archivednotes.removeLast();
             });
           },
         ),
@@ -236,7 +236,7 @@ class FolderNotesPageState extends State<FolderNotesPage> {
     );
     // Notu listeden kaldır ve arşivlere ekle
     setState(() {
-      archivedNotes.add(notes[index]);
+      archivednotes.add(notes[index]);
       notes.removeAt(index);
     });
   }

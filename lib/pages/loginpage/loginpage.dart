@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
 import 'package:notlar/components/squaretile.dart';
-import 'package:notlar/pages/loginpage/emptyvalidator.dart';
 
 class LoginPage extends StatelessWidget {
   final VoidCallback Uyeol;
-  final VoidCallback OturumAc;
+  final VoidCallback Oturumac;
 
-  const LoginPage({Key? key, required this.Uyeol, required this.OturumAc}) : super(key: key);
+  const LoginPage({Key? key, required this.Uyeol, required this.Oturumac}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController usernameController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+    final  usernamecontroller = TextEditingController();
+    final  passwordcontroller = TextEditingController();
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -29,14 +28,14 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(
-                      Icons.person,
+                      Icons.account_circle,
                     size:100,
                   ),
 
                 ],
               ),
 
-              SizedBox(height: 50),
+              SizedBox(height: 25),
 
               // Tekrar hoş geldin!
               Text(
@@ -50,7 +49,7 @@ class LoginPage extends StatelessWidget {
 
               // Kullanıcı adı metin alanı
               MyTextField(
-                controller: usernameController,
+                controller: usernamecontroller,
                 hintText: 'Kullanıcı Adı',
                 obscureText: false,
               ),
@@ -58,7 +57,7 @@ class LoginPage extends StatelessWidget {
 
               // Şifre metin alanı
               MyTextField(
-                controller: passwordController,
+                controller: passwordcontroller,
                 hintText: 'Şifre',
                 obscureText: true,
               ),
@@ -82,11 +81,12 @@ class LoginPage extends StatelessWidget {
               // Oturum aç düğmesi
               MyButton(
                 onTap: () {
-                  // Kullanıcı adı ve şifre kontrolü yapılıyor
-                  if (EmptyValidator.isNotEmpty(usernameController.text) && EmptyValidator.isNotEmpty(passwordController.text)) {
-                    OturumAc(); // Oturum açma fonksiyonu çağrılıyor
+                  // Boş mu kontrolü
+                  if (usernamecontroller.text.isNotEmpty && passwordcontroller.text.isNotEmpty) {
+                    // Oturum açma işlemi gerçekleştirilir
+                    Oturumac();
                   } else {
-                    // Kullanıcıya bir uyarı gösterilebilir
+                    // Uyarı mesajı
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -141,7 +141,7 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   SquareTile(imagePath: 'lib/images/google.png'),
-                  SizedBox(width: 10), // İki buton arasında boşluk bırakmak için
+                  SizedBox(width: 10),
                   SquareTile(imagePath: 'lib/images/apple.png'),
                 ],
               ),
