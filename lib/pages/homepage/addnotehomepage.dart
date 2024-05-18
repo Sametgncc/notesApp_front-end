@@ -75,7 +75,6 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
                       ),
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
-                      autofocus: true, // Sayfa açıldığında klavyeyi otomatik aç
                     ),
                     SizedBox(height: 16),
                     buildImageGallery(),

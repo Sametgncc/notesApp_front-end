@@ -39,7 +39,7 @@ class FolderNotesPageState extends State<FolderNotesPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      NoteContentPage(noteContent: notes[index]),
+                      NoteContentPage(notecontent: notes[index]),
                 ),
               );
             },
@@ -117,7 +117,7 @@ class FolderNotesPageState extends State<FolderNotesPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NoteContentPage(noteContent: notes[index]),
+        builder: (context) => NoteContentPage(notecontent: notes[index]),
       ),
     ).then((editedNote) {
       if (editedNote != null) {
