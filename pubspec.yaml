@@ -6,11 +6,15 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.3.4 <4.0.0'
 
+
+
 dependencies:
   flutter:
     sdk: flutter
   image_picker: ^0.8.4+4
   signature: ^5.5.0
+  http: ^0.13.3
+
 
 dev_dependencies:
   flutter_test:

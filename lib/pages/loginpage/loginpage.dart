@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
 import 'package:notlar/components/squaretile.dart';
@@ -14,6 +17,39 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
+
+    Future<void> _login() async {
+      final response = await http.post(
+        Uri.parse('http://localhost:8080/api/users/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'username': usernameController.text,
+          'password': passwordController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Successful login
+        OturumAc();
+      } else {
+        // Login failed
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Hata"),
+            content: Text("Giriş başarısız. Kullanıcı adı veya şifre yanlış."),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("Tamam"),
+              ),
+            ],
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -80,7 +116,7 @@ class LoginPage extends StatelessWidget {
                 onTap: () {
                   // Kullanıcı adı ve şifre kontrolü yapılıyor
                   if (EmptyValidator.isNotEmpty(usernameController.text) && EmptyValidator.isNotEmpty(passwordController.text)) {
-                    OturumAc(); // Oturum açma fonksiyonu çağrılıyor
+                    _login(); // Oturum açma fonksiyonu çağrılıyor
                   } else {
                     // Kullanıcıya bir uyarı gösterilebilir
                     showDialog(

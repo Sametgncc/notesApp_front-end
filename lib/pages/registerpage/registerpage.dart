@@ -144,3 +144,4 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
+
