@@ -1,18 +1,70 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
 import 'package:notlar/components/squaretile.dart';
 
 class LoginPage extends StatelessWidget {
   final VoidCallback Uyeol;
-  final VoidCallback Oturumac;
+  final VoidCallback OturumAc;
 
-  const LoginPage({Key? key, required this.Uyeol, required this.Oturumac}) : super(key: key);
+  const LoginPage({Key? key, required this.Uyeol, required this.OturumAc, required Null Function() Oturumac}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final  usernamecontroller = TextEditingController();
-    final  passwordcontroller = TextEditingController();
+    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
+    Future<void> _login(String username, String password, BuildContext context) async {
+      try {
+        final response = await http.post(
+          Uri.parse('http://localhost:8085/users/login'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'username': username,
+            'password': password,
+          }),
+        );
+
+        if (response.statusCode == 200) {
+          // Successful login
+          OturumAc();
+        } else {
+          // Login failed
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Hata"),
+              content: Text("Giriş başarısız. Kullanıcı adı veya şifre yanlış."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Tamam"),
+                ),
+              ],
+            ),
+          );
+        }
+      } catch (e) {
+        // Error handling
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Hata"),
+            content: Text("Bir hata oluştu: $e"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("Tamam"),
+              ),
+            ],
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -28,10 +80,9 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(
-                      Icons.account_circle,
-                    size:100,
+                    Icons.account_circle,
+                    size: 100,
                   ),
-
                 ],
               ),
 
@@ -49,7 +100,7 @@ class LoginPage extends StatelessWidget {
 
               // Kullanıcı adı metin alanı
               MyTextField(
-                controller: usernamecontroller,
+                controller: usernameController,
                 hintText: 'Kullanıcı Adı',
                 obscureText: false,
               ),
@@ -57,7 +108,7 @@ class LoginPage extends StatelessWidget {
 
               // Şifre metin alanı
               MyTextField(
-                controller: passwordcontroller,
+                controller: passwordController,
                 hintText: 'Şifre',
                 obscureText: true,
               ),
@@ -81,12 +132,9 @@ class LoginPage extends StatelessWidget {
               // Oturum aç düğmesi
               MyButton(
                 onTap: () {
-                  // Boş mu kontrolü
-                  if (usernamecontroller.text.isNotEmpty && passwordcontroller.text.isNotEmpty) {
-                    // Oturum açma işlemi gerçekleştirilir
-                    Oturumac();
+                  if (usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                    _login(usernameController.text, passwordController.text, context);
                   } else {
-                    // Uyarı mesajı
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
