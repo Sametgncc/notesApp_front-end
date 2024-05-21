@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RegisterPage extends StatelessWidget {
   final VoidCallback Girisyap;
@@ -12,6 +14,76 @@ class RegisterPage extends StatelessWidget {
     final usernameController=TextEditingController();
     final passwordController=TextEditingController();
     final mailController=TextEditingController();
+
+    Future<void> _register(String username, String password, String email, BuildContext context) async {
+      try {
+        if (email.isEmpty) {
+          // E-posta alanı boş ise kayıt işlemi gerçekleştirilmez
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Hata"),
+              content: Text("E-posta alanı boş olamaz."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Tamam"),
+                ),
+              ],
+            ),
+          );
+          return;
+        }
+
+        final response = await http.post(
+          Uri.parse('http://localhost:8085/users/register'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'username': username,
+            'password': password,
+            'email': email,
+          }),
+        );
+
+        if (response.statusCode == 200) {
+          // Kayıt başarılı
+          Kayitol();
+        } else {
+          // Kayıt başarısız
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Hata"),
+              content: Text("Kayıt başarısız. Lütfen tekrar deneyin."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Tamam"),
+                ),
+              ],
+            ),
+          );
+        }
+      } catch (e) {
+        // Hata oluştu
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Hata"),
+            content: Text("Bir hata oluştu: $e"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text("Tamam"),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
