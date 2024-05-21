@@ -1,70 +1,19 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/widgets.dart';
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
 import 'package:notlar/components/squaretile.dart';
 
 class LoginPage extends StatelessWidget {
   final VoidCallback Uyeol;
-  final VoidCallback OturumAc;
+  final VoidCallback Oturumac;
 
-  const LoginPage({Key? key, required this.Uyeol, required this.OturumAc, required Null Function() Oturumac}) : super(key: key);
+  const LoginPage({Key? key, required this.Uyeol, required this.Oturumac}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-
-    Future<void> _login(String username, String password, BuildContext context) async {
-      try {
-        final response = await http.post(
-          Uri.parse('http://localhost:8085/users/login'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, String>{
-            'username': username,
-            'password': password,
-          }),
-        );
-
-        if (response.statusCode == 200) {
-          // Successful login
-          OturumAc();
-        } else {
-          // Login failed
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text("Hata"),
-              content: Text("Giriş başarısız. Kullanıcı adı veya şifre yanlış."),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text("Tamam"),
-                ),
-              ],
-            ),
-          );
-        }
-      } catch (e) {
-        // Error handling
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text("Hata"),
-            content: Text("Bir hata oluştu: $e"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("Tamam"),
-              ),
-            ],
-          ),
-        );
-      }
-    }
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
@@ -81,9 +30,9 @@ class LoginPage extends StatelessWidget {
                 children: const [
                   Icon(
                     Icons.account_circle,
-                    size: 100,
-                  ),
-                ],
+                    size: 125,
+                  )
+                  ],
               ),
 
               SizedBox(height: 25),
@@ -130,28 +79,31 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 25),
 
               // Oturum aç düğmesi
-              MyButton(
-                onTap: () {
-                  if (usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                    _login(usernameController.text, passwordController.text, context);
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text("Hata"),
-                        content: Text("Kullanıcı adı ve şifre boş olamaz."),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text("Tamam"),
-                          ),
-                        ],
+          MyButton(
+            onTap: () {
+              // Kullanıcı adı, e-posta ve şifre kontrolü yapılıyor
+              if (usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                // Kayıt işlemi gerçekleştirilir
+                Oturumac();
+              } else {
+                // Kullanıcıya bir uyarı gösterilebilir
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text("Hata"),
+                    content: Text("Kullanıcı adı ve şifre boş olamaz."),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Tamam"),
                       ),
-                    );
-                  }
-                },
-                text: 'Oturum Aç',
-              ),
+                    ],
+                  ),
+                );
+              }
+            },
+            text: 'Oturum Aç',
+          ),
 
               SizedBox(height: 50),
 
@@ -189,7 +141,7 @@ class LoginPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   SquareTile(imagePath: 'lib/images/google.png'),
-                  SizedBox(width: 10),
+                  SizedBox(width: 10), // İki buton arasında boşluk bırakmak için
                   SquareTile(imagePath: 'lib/images/apple.png'),
                 ],
               ),

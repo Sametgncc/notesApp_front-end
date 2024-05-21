@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
 
@@ -8,65 +6,12 @@ class RegisterPage extends StatelessWidget {
   final VoidCallback Girisyap;
   final VoidCallback Kayitol;
 
-  const RegisterPage({Key? key, required this.Girisyap, required this.Kayitol}) : super(key: key);
-
+  const RegisterPage({Key? key, required this.Girisyap,required this.Kayitol}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final TextEditingController usernameController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-    final TextEditingController mailController = TextEditingController();
-
-    Future<void> _register(String username, String password, String email, BuildContext context) async {
-      try {
-        final response = await http.post(
-          Uri.parse('http://localhost:8085/users/register'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, String>{
-            'username': username,
-            'password': password,
-            'email': email,
-          }),
-        );
-
-        if (response.statusCode == 200) {
-          // Kayıt başarılı
-          Kayitol();
-        } else {
-          // Kayıt başarısız
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text("Hata"),
-              content: Text("Kayıt başarısız. Lütfen tekrar deneyin."),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text("Tamam"),
-                ),
-              ],
-            ),
-          );
-        }
-      } catch (e) {
-        // Hata oluştu
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text("Hata"),
-            content: Text("Bir hata oluştu: $e"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text("Tamam"),
-              ),
-            ],
-          ),
-        );
-      }
-    }
-
+    final usernameController=TextEditingController();
+    final passwordController=TextEditingController();
+    final mailController=TextEditingController();
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -115,19 +60,12 @@ class RegisterPage extends StatelessWidget {
                 // Kayıt ol düğmesi
                 MyButton(
                   onTap: () {
-                    // Boş mu kontrolü
-                    if (usernameController.text.isNotEmpty &&
-                        mailController.text.isNotEmpty &&
-                        passwordController.text.isNotEmpty) {
+                    // Kullanıcı adı, e-posta ve şifre kontrolü yapılıyor
+                    if (usernameController.text.isNotEmpty && mailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
                       // Kayıt işlemi gerçekleştirilir
-                      _register(
-                        usernameController.text,
-                        passwordController.text,
-                        mailController.text,
-                        context,
-                      );
+                      Kayitol();
                     } else {
-                      // Uyarı mesajı
+                      // Kullanıcıya bir uyarı gösterilebilir
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(

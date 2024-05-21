@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           },
           Oturumac: () { //Login'deki Oturumaç ile home'a geçiş
             Navigator.pushNamed(context, '/home');
-          }, OturumAc: () {  },
+          },
         ),
         '/register': (context) => RegisterPage(
           Girisyap: () { // Register'daki Girisyap ile Login'e geçiş
