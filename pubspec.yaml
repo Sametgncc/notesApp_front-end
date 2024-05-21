@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
   image_picker: ^0.8.4+4
   signature: ^5.5.0
-
-
+  sqflite: ^2.0.0+4
+  path: ^1.8.0
 
 
 dev_dependencies:

@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
+import 'package:notlar/database/databasehelper.dart';
+
+import 'package:notlar/models/user.dart';
+
 
 class RegisterPage extends StatelessWidget {
   final VoidCallback Girisyap;
-  final VoidCallback Kayitol;
+  final Future<void> Function() Kayitol;
 
-  const RegisterPage({Key? key, required this.Girisyap,required this.Kayitol}) : super(key: key);
+  const RegisterPage({Key? key, required this.Girisyap, required this.Kayitol}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final usernameController=TextEditingController();
-    final passwordController=TextEditingController();
-    final mailController=TextEditingController();
+    final usernameController = TextEditingController();
+    final passwordController = TextEditingController();
+    final mailController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -59,13 +65,40 @@ class RegisterPage extends StatelessWidget {
 
                 // Kayıt ol düğmesi
                 MyButton(
-                  onTap: () {
-                    // Kullanıcı adı, e-posta ve şifre kontrolü yapılıyor
-                    if (usernameController.text.isNotEmpty && mailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                      // Kayıt işlemi gerçekleştirilir
-                      Kayitol();
+                  onTap: () async {
+                    if (usernameController.text.isNotEmpty &&
+                        mailController.text.isNotEmpty &&
+                        passwordController.text.isNotEmpty) {
+                      // Yeni bir kullanıcı oluştur
+                      final newUser = User(
+                        username: usernameController.text,
+                        email: mailController.text,
+                        password: passwordController.text,
+                      );
+                      try {
+                        // Kullanıcıyı veritabanına ekle
+                        await DatabaseHelper.instance.insertUser(newUser);
+                        print('Kullanıcı başarıyla kaydedildi.');
+                        // Kayıt işlemi tamamlandıktan sonra diğer işlemler...
+                        await Kayitol();
+                      } catch (e) {
+                        print('Kullanıcı kaydedilirken hata oluştu: $e');
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Hata"),
+                            content: Text("Kullanıcı kaydedilirken bir hata oluştu: $e"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("Tamam"),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     } else {
-                      // Kullanıcıya bir uyarı gösterilebilir
+                      // Kullanıcıya bir uyarı göster
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
