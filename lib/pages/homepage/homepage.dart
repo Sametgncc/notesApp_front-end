@@ -133,12 +133,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 String searchText = searchController.text.trim();
                 if (searchText.isNotEmpty) {
-                  // Aranan notun sayfasına yönlendir
-                  // Örneğin:
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => NotSayfasi(searchText)),
-                  // );
+
                 }
                 Navigator.pop(context); // Diyalog kutusunu kapat
               },

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
+import 'package:notlar/services/user_service.dart';
+
+import '../../service/UserService.dart'; // Paket adı düzeltildi
 
 class RegisterPage extends StatelessWidget {
   final VoidCallback Girisyap;
-  final VoidCallback Kayitol;
+  final UserService _userService = UserService();
 
-  const RegisterPage({Key? key, required this.Girisyap,required this.Kayitol}) : super(key: key);
+  RegisterPage({Key? key, required this.Girisyap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final usernameController=TextEditingController();
-    final passwordController=TextEditingController();
-    final mailController=TextEditingController();
+    final TextEditingController usernameController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController mailController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -23,7 +28,6 @@ class RegisterPage extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 50),
 
-                // Hesap Oluştur!
                 Text(
                   'Hesap Oluştur!',
                   style: TextStyle(
@@ -33,7 +37,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 25),
 
-                // Kullanıcı adı metin alanı
                 MyTextField(
                   controller: usernameController,
                   hintText: 'Kullanıcı Adı',
@@ -41,7 +44,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
 
-                // E-posta metin alanı
                 MyTextField(
                   controller: mailController,
                   hintText: 'E-posta',
@@ -49,7 +51,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
 
-                // Şifre metin alanı
                 MyTextField(
                   controller: passwordController,
                   hintText: 'Şifre',
@@ -57,15 +58,11 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
 
-                // Kayıt ol düğmesi
                 MyButton(
-                  onTap: () {
-                    // Kullanıcı adı, e-posta ve şifre kontrolü yapılıyor
+                  onTap: () async {
                     if (usernameController.text.isNotEmpty && mailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                      // Kayıt işlemi gerçekleştirilir
-                      Kayitol();
+                      await _userService.register(usernameController.text, passwordController.text);
                     } else {
-                      // Kullanıcıya bir uyarı gösterilebilir
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
@@ -85,7 +82,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 50),
 
-                // Veya devam et
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -114,7 +110,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 50),
 
-                // Zaten üye misin? Giriş yap
                 GestureDetector(
                   onTap: Girisyap,
                   child: Row(

@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:notlar/pages/homepage/addnote/drawingpage.dart';
 import 'package:notlar/pages/homepage/addnote/selectfolderpage.dart';
 import 'package:signature/signature.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'drawingpage.dart';
 
 class AddNoteHomePage extends StatefulWidget {
   @override
@@ -11,8 +15,8 @@ class AddNoteHomePage extends StatefulWidget {
 }
 
 class AddNoteHomePageState extends State<AddNoteHomePage> {
-  final TextEditingController notecontroller = TextEditingController();
-  final SignatureController signaturecontroller = SignatureController(
+  final TextEditingController noteController = TextEditingController();
+  final SignatureController signatureController = SignatureController(
     penStrokeWidth: 5,
     penColor: Colors.black,
     exportBackgroundColor: Colors.white,
@@ -31,17 +35,14 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () async {
-              // Notu kaydetme işlevselliği
-              String note = notecontroller.text;
+              String noteContent = noteController.text;
 
-              // Notun ismini al
               String? noteName = await getNoteName(context);
               if (noteName == null || noteName.isEmpty) {
-                // Eğer not adı girilmediyse, kaydetme işlemini iptal et
                 return;
               }
 
-              // Klasör seçimi için dialog göster
+              // Klasör seçimi (Eğer varsa)
               String? selectedFolder = await showDialog<String>(
                 context: context,
                 builder: (BuildContext context) {
@@ -50,7 +51,8 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
               );
 
               if (selectedFolder != null) {
-                // Notu seçilen klasöre kaydet
+                // Not oluşturma fonksiyonunu çağır
+                await createNote(noteName, noteContent);
                 print('Not kaydedildi: $noteName, Klasör: $selectedFolder');
               }
 
@@ -68,7 +70,7 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
                 child: Column(
                   children: [
                     TextField(
-                      controller: notecontroller, // Controller atanması
+                      controller: noteController, // Controller atanması
                       decoration: InputDecoration(
                         hintText: 'Notunuzu buraya yazın',
                         border: InputBorder.none,
@@ -117,7 +119,7 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DrawingPage(controller: signaturecontroller),
+                  builder: (context) => DrawingPage(controller: signatureController),
                 ),
               );
             },
@@ -142,7 +144,6 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
     }
   }
 
-  // Notun ismini almak için bir metot
   Future<String?> getNoteName(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     return showDialog<String>(
@@ -176,5 +177,34 @@ class AddNoteHomePageState extends State<AddNoteHomePage> {
         );
       },
     );
+  }
+
+  Future<void> createNote(String title, String content) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token == null) {
+      print('Kullanıcı giriş yapmamış.');
+      return;
+    }
+
+    var url = Uri.parse('http://localhost:8080/v1/notes');
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'title': title,
+        'content': content,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print('Not başarıyla oluşturuldu');
+    } else {
+      print('Not oluşturulamadı: ${response.reasonPhrase}');
+    }
   }
 }

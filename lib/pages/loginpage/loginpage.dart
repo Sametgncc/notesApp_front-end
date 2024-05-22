@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:notlar/components/mybutton.dart';
 import 'package:notlar/components/mytextfield.dart';
-import 'package:notlar/components/squaretile.dart';
+import 'package:notlar/services/user_service.dart';
+
+import '../../service/UserService.dart'; // Paket adı düzeltildi
 
 class LoginPage extends StatelessWidget {
   final VoidCallback Uyeol;
-  final VoidCallback Oturumac;
+  final UserService _userService = UserService(); // UserService nesnesi oluşturuldu
 
-  const LoginPage({Key? key, required this.Uyeol, required this.Oturumac}) : super(key: key);
+  LoginPage({Key? key, required this.Uyeol}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class LoginPage extends StatelessWidget {
                     Icons.account_circle,
                     size: 125,
                   )
-                  ],
+                ],
               ),
 
               SizedBox(height: 25),
@@ -79,31 +80,31 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 25),
 
               // Oturum aç düğmesi
-          MyButton(
-            onTap: () {
-              // Kullanıcı adı, e-posta ve şifre kontrolü yapılıyor
-              if (usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                // Kayıt işlemi gerçekleştirilir
-                Oturumac();
-              } else {
-                // Kullanıcıya bir uyarı gösterilebilir
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text("Hata"),
-                    content: Text("Kullanıcı adı ve şifre boş olamaz."),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text("Tamam"),
+              MyButton(
+                onTap: () async {
+                  // Kullanıcı adı ve şifre kontrolü yapılıyor
+                  if (usernameController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                    // Oturum açma isteği gönderiliyor
+                    await _userService.login(usernameController.text, passwordController.text);
+                  } else {
+                    // Kullanıcıya bir uyarı gösterilebilir
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Hata"),
+                        content: Text("Kullanıcı adı ve şifre boş olamaz."),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("Tamam"),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              }
-            },
-            text: 'Oturum Aç',
-          ),
+                    );
+                  }
+                },
+                text: 'Oturum Aç',
+              ),
 
               SizedBox(height: 50),
 
@@ -136,17 +137,6 @@ class LoginPage extends StatelessWidget {
               ),
               SizedBox(height: 50),
 
-              // Google ve Apple ile oturum açma
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  SquareTile(imagePath: 'lib/images/google.png'),
-                  SizedBox(width: 10), // İki buton arasında boşluk bırakmak için
-                  SquareTile(imagePath: 'lib/images/apple.png'),
-                ],
-              ),
-              SizedBox(height: 50),
-
               // Üye değil misin? Kayıt ol
               GestureDetector(
                 onTap: Uyeol,
@@ -158,7 +148,7 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     SizedBox(width: 4),
-                    const Text(
+                    Text(
                       'Üye ol',
                       style: TextStyle(
                         color: Colors.blue,
